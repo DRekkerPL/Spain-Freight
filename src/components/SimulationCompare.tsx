@@ -35,7 +35,7 @@ export default function SimulationCompare({ data }: SimulationCompareProps) {
             ].map(([label, value]) => (
               <div key={label} className="flex justify-between items-baseline border-b border-border pb-2">
                 <span className="text-[0.65rem] text-muted">{label}</span>
-                <span className="font-syne text-[1.05rem] font-bold text-[#e2e8f0]">{value}</span>
+                <span className="font-syne text-[1.05rem] font-bold text-text">{value}</span>
               </div>
             ))}
           </div>

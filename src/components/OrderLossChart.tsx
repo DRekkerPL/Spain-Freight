@@ -11,12 +11,12 @@ interface OrderLossChartProps {
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null
   return (
-    <div className="bg-surface border border-border p-3 text-[0.65rem] font-mono">
-      <div className="text-white mb-2">{label}</div>
+    <div className="bg-surface border border-border p-3 text-[0.65rem] font-mono shadow-sm">
+      <div className="text-text mb-2">{label}</div>
       {payload.map((p: any) => (
         <div key={p.name} className="flex justify-between gap-4">
           <span style={{ color: p.fill }}>{p.name}</span>
-          <span className="text-white">{p.value.toLocaleString()}</span>
+          <span className="text-text">{p.value.toLocaleString()}</span>
         </div>
       ))}
     </div>
@@ -51,21 +51,21 @@ export default function OrderLossChart({ data }: OrderLossChartProps) {
       <div className="px-5 pt-4 pb-2" style={{ height: 200 }}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData} barSize={32} barCategoryGap="30%">
-            <CartesianGrid vertical={false} stroke="#1f2d45" strokeDasharray="3 3" />
+            <CartesianGrid vertical={false} stroke="#E0DDD7" strokeDasharray="3 3" />
             <XAxis
               dataKey="name"
-              tick={{ fontSize: 9, fill: '#64748b', fontFamily: 'DM Mono, monospace' }}
-              axisLine={{ stroke: '#1f2d45' }}
+              tick={{ fontSize: 9, fill: '#6B7A84', fontFamily: 'DM Mono, monospace' }}
+              axisLine={{ stroke: '#E0DDD7' }}
               tickLine={false}
             />
             <YAxis
-              tick={{ fontSize: 9, fill: '#64748b', fontFamily: 'DM Mono, monospace' }}
+              tick={{ fontSize: 9, fill: '#6B7A84', fontFamily: 'DM Mono, monospace' }}
               axisLine={false}
               tickLine={false}
               width={32}
             />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: '#1e293b' }} />
-            <Bar dataKey="Profitable" stackId="a" fill="#10b981" fillOpacity={0.65} radius={[0, 0, 0, 0]} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: '#F0EEEA' }} />
+            <Bar dataKey="Profitable" stackId="a" fill="#006B44" fillOpacity={0.75} radius={[0, 0, 0, 0]} />
             <Bar dataKey="Loss-making" stackId="a" fill="#ef4444" fillOpacity={0.75} radius={[2, 2, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
@@ -74,7 +74,7 @@ export default function OrderLossChart({ data }: OrderLossChartProps) {
       {/* Legend */}
       <div className="flex items-center gap-5 px-5 pb-3">
         <div className="flex items-center gap-1.5 text-[0.58rem] text-muted">
-          <div className="w-3 h-1.5 rounded-sm" style={{ background: '#10b981', opacity: 0.65 }} />
+          <div className="w-3 h-1.5 rounded-sm" style={{ background: '#006B44', opacity: 0.75 }} />
           Profitable
         </div>
         <div className="flex items-center gap-1.5 text-[0.58rem] text-muted">

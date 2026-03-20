@@ -53,12 +53,12 @@ export default function ProfileTable({ data }: ProfileTableProps) {
               ? 'text-danger'
               : row.marginPct < 13
               ? 'text-warn'
-              : 'text-[#e2e8f0]'
+              : 'text-text'
 
             return (
               <tr key={i} className="border-b border-faint hover:bg-faint transition-colors">
                 <td className="px-4 py-2.5">
-                  <span className="font-syne text-[0.75rem] font-semibold text-white">
+                  <span className="font-syne text-[0.75rem] font-semibold text-text">
                     {row.profile}
                   </span>
                 </td>
