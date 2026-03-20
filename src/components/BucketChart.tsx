@@ -3,13 +3,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { BucketRow } from '@/data/bechtle'
 
-interface BucketChartProps {
-  data: BucketRow[]
-}
-
 const MAX_MARGIN = 40
 
-export default function BucketChart({ data }: BucketChartProps) {
+export default function BucketChart({ data }: { data: BucketRow[] }) {
   const [animated, setAnimated] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -25,9 +21,9 @@ export default function BucketChart({ data }: BucketChartProps) {
   return (
     <div ref={ref} className="flex flex-col">
       {/* Column headers */}
-      <div className="grid grid-cols-[130px_1fr_72px_72px_64px] gap-3 px-6 py-3 border-b border-border bg-faint">
+      <div className="grid grid-cols-[130px_1fr_72px_72px_64px] gap-3 px-6 py-3 border-b border-border bg-subtle">
         {['Bucket', '', 'Before', 'After', '+pp'].map((h, i) => (
-          <span key={i} className={`text-xs font-bold uppercase tracking-wider text-muted ${i >= 2 ? 'text-right' : ''}`}>
+          <span key={i} className={`text-xs font-semibold uppercase tracking-wider text-muted ${i >= 2 ? 'text-right' : ''}`}>
             {h}
           </span>
         ))}
@@ -39,32 +35,37 @@ export default function BucketChart({ data }: BucketChartProps) {
           const beforeW = (row.avgCurrentMargin / MAX_MARGIN) * 100
           const afterW  = (row.avgNewMargin     / MAX_MARGIN) * 100
           const diffColor = row.marginDiffPp > 10
-            ? 'text-ok font-bold'
+            ? 'text-success font-bold'
             : row.marginDiffPp > 4
-            ? 'text-accent font-semibold'
+            ? 'text-primary font-semibold'
             : 'text-muted'
           const label = row.costBucket.replace(/^\d+\.\s*/, '')
 
           return (
             <div
               key={i}
-              className="grid grid-cols-[130px_1fr_72px_72px_64px] gap-3 px-6 py-4 items-center hover:bg-faint transition-colors"
+              className="grid grid-cols-[130px_1fr_72px_72px_64px] gap-3 px-6 py-4 items-center hover:bg-subtle transition-colors"
             >
-              <span className="text-sm font-medium text-muted">{label}</span>
+              <span className="text-sm text-muted">{label}</span>
 
-              <div className="relative h-2.5 bg-border rounded-full overflow-hidden">
+              <div className="relative h-2 bg-border rounded-full overflow-hidden">
                 <div
-                  className="absolute inset-y-0 left-0 bg-brand-sand/70 rounded-full transition-all duration-700 ease-out"
-                  style={{ width: animated ? `${beforeW}%` : '0%', transitionDelay: `${i * 40}ms` }}
+                  className="absolute inset-y-0 left-0 rounded-full transition-all duration-700 ease-out"
+                  style={{
+                    width: animated ? `${beforeW}%` : '0%',
+                    transitionDelay: `${i * 40}ms`,
+                    background: '#B5AA9C',
+                    opacity: 0.7,
+                  }}
                 />
                 <div
-                  className="absolute inset-y-0 left-0 bg-accent rounded-full transition-all duration-700 ease-out"
+                  className="absolute inset-y-0 left-0 bg-primary rounded-full transition-all duration-700 ease-out"
                   style={{ width: animated ? `${afterW}%` : '0%', transitionDelay: `${i * 40 + 100}ms` }}
                 />
               </div>
 
               <span className="text-right text-sm text-muted tabular-nums">{row.avgCurrentMargin.toFixed(1)}%</span>
-              <span className="text-right text-sm font-semibold text-accent tabular-nums">{row.avgNewMargin.toFixed(1)}%</span>
+              <span className="text-right text-sm font-semibold text-primary tabular-nums">{row.avgNewMargin.toFixed(1)}%</span>
               <span className={`text-right text-sm tabular-nums ${diffColor}`}>+{row.marginDiffPp.toFixed(1)}</span>
             </div>
           )
@@ -72,13 +73,13 @@ export default function BucketChart({ data }: BucketChartProps) {
       </div>
 
       {/* Legend */}
-      <div className="flex items-center gap-6 px-6 py-4 border-t border-border bg-faint">
+      <div className="flex items-center gap-6 px-6 py-4 border-t border-border bg-subtle">
         <div className="flex items-center gap-2 text-sm text-muted">
-          <div className="w-5 h-2.5 bg-brand-sand/70 rounded-full" />
+          <div className="w-5 h-2 rounded-full" style={{ background: '#B5AA9C', opacity: 0.7 }} />
           Before
         </div>
         <div className="flex items-center gap-2 text-sm text-muted">
-          <div className="w-5 h-2.5 bg-accent rounded-full" />
+          <div className="w-5 h-2 bg-primary rounded-full" />
           After
         </div>
       </div>
