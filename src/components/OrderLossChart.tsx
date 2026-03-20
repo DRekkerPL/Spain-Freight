@@ -11,7 +11,7 @@ interface OrderLossChartProps {
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null
   return (
-    <div className="bg-surface border border-border p-3 text-[0.65rem] font-mono shadow-sm">
+    <div className="bg-surface border border-border p-3 text-[0.65rem] shadow-sm">
       <div className="text-text mb-2">{label}</div>
       {payload.map((p: any) => (
         <div key={p.name} className="flex justify-between gap-4">
@@ -54,12 +54,12 @@ export default function OrderLossChart({ data }: OrderLossChartProps) {
             <CartesianGrid vertical={false} stroke="#E0DDD7" strokeDasharray="3 3" />
             <XAxis
               dataKey="name"
-              tick={{ fontSize: 9, fill: '#6B7A84', fontFamily: 'DM Mono, monospace' }}
+              tick={{ fontSize: 9, fill: '#6B7A84', fontFamily: 'Montserrat, sans-serif' }}
               axisLine={{ stroke: '#E0DDD7' }}
               tickLine={false}
             />
             <YAxis
-              tick={{ fontSize: 9, fill: '#6B7A84', fontFamily: 'DM Mono, monospace' }}
+              tick={{ fontSize: 9, fill: '#6B7A84', fontFamily: 'Montserrat, sans-serif' }}
               axisLine={false}
               tickLine={false}
               width={32}
