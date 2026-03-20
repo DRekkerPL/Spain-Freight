@@ -2,7 +2,8 @@ import KpiCard from '@/components/KpiCard'
 import ProfileTable from '@/components/ProfileTable'
 import SimulationCompare from '@/components/SimulationCompare'
 import BucketChart from '@/components/BucketChart'
-import { kpiSummary, profiles, simulation, buckets } from '@/data/bechtle'
+import OrderLossChart from '@/components/OrderLossChart'
+import { kpiSummary, profiles, simulation, buckets, orderLoss } from '@/data/bechtle'
 
 function SectionLabel({ children, sub }: { children: React.ReactNode; sub?: string }) {
   return (
@@ -90,7 +91,19 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ── Section 2: Profiles + Simulation ── */}
+        {/* ── Section 2: Order Loss by Basket Size ── */}
+        <div>
+          <SectionLabel sub="shipments · 2025 YTD">Loss analysis by basket size</SectionLabel>
+          <Panel>
+            <PanelHead
+              title="Order Loss by Basket Size"
+              sub="profitable vs loss-making shipments"
+            />
+            <OrderLossChart data={orderLoss} />
+          </Panel>
+        </div>
+
+        {/* ── Section 3: Profiles + Simulation ── */}
         <div className="grid grid-cols-[1fr_1.5fr] gap-6 items-start">
 
           {/* Profile table */}
