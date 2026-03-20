@@ -68,7 +68,7 @@ export default function OrderLossChart({ data }: { data: OrderLossBucket[] }) {
           const pctColor    = pct >= 99 ? 'text-danger'  : pct > 50 ? 'text-warning' : pct > 5 ? 'text-primary' : 'text-success'
           const netColor    = row.avgNetProfit < 0 ? 'text-danger' : 'text-success'
           return (
-            <div key={i} className={`px-4 py-5 border-l-4 ${borderColor} ${i < data.length-1 ? 'border-r border-border' : ''} hover:bg-subtle transition-colors`}>
+            <div key={i} className={`px-4 py-5 border-l-4 ${borderColor} ${i < data.length - 1 ? 'border-r border-border' : ''} hover:bg-subtle transition-colors`}>
               <p className="text-xs font-semibold text-muted mb-2">{row.basketSize.replace(/^\d+\.\s*/, '')}</p>
               <p className={`text-3xl font-bold leading-none ${pctColor}`}>{pct.toFixed(0)}%</p>
               <p className="text-xs text-muted mt-1">loss rate</p>
