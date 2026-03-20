@@ -19,42 +19,54 @@ export default function SimulationCompare({ data }: SimulationCompareProps) {
   const deltaMar = after.marginPct - before.marginPct
 
   const rows = [
-    { label: 'Revenue',      before: fmt(before.revenue),               after: fmt(after.revenue)               },
-    { label: 'Gross Profit', before: fmt(before.grossProfit),           after: fmt(after.grossProfit)           },
-    { label: 'GP Margin',    before: `${before.marginPct.toFixed(1)}%`, after: `${after.marginPct.toFixed(1)}%` },
+    { label: 'Revenue',      bv: fmt(before.revenue),               av: fmt(after.revenue)               },
+    { label: 'Gross Profit', bv: fmt(before.grossProfit),           av: fmt(after.grossProfit)           },
+    { label: 'GP Margin',    bv: `${before.marginPct.toFixed(1)}%`, av: `${after.marginPct.toFixed(1)}%` },
   ]
 
   return (
     <div>
       {/* Column headers */}
-      <div className="grid grid-cols-3 border-b border-border bg-faint px-6 py-3">
-        <span className="text-xs font-semibold uppercase tracking-widest text-muted" />
-        <span className="text-xs font-semibold uppercase tracking-widest text-muted text-right">Before</span>
-        <span className="text-xs font-semibold uppercase tracking-widest text-ok text-right">After</span>
+      <div className="grid grid-cols-3 border-b border-border">
+        <div className="px-6 py-4 bg-faint" />
+        <div className="px-6 py-4 bg-faint border-l border-border">
+          <p className="text-xs font-bold uppercase tracking-widest text-muted">Before</p>
+          <p className="text-sm text-muted mt-0.5">Customer profiles</p>
+        </div>
+        <div className="px-6 py-4 bg-ok/10 border-l border-border">
+          <p className="text-xs font-bold uppercase tracking-widest text-ok">After</p>
+          <p className="text-sm text-ok/70 mt-0.5">System profile</p>
+        </div>
       </div>
 
-      {/* Rows */}
+      {/* Data rows */}
       <div className="divide-y divide-border">
-        {rows.map(({ label, before: bv, after: av }) => (
-          <div key={label} className="grid grid-cols-3 items-center px-6 py-4 hover:bg-faint transition-colors">
-            <span className="text-sm text-muted font-medium">{label}</span>
-            <span className="text-base font-bold text-text text-right">{bv}</span>
-            <span className="text-base font-bold text-ok text-right">{av}</span>
+        {rows.map(({ label, bv, av }) => (
+          <div key={label} className="grid grid-cols-3 items-center">
+            <div className="px-6 py-4 bg-faint border-r border-border">
+              <span className="text-base font-medium text-muted">{label}</span>
+            </div>
+            <div className="px-6 py-4 border-r border-border hover:bg-faint transition-colors">
+              <span className="text-xl font-bold text-text tabular-nums">{bv}</span>
+            </div>
+            <div className="px-6 py-4 bg-ok/5 hover:bg-ok/10 transition-colors">
+              <span className="text-xl font-bold text-ok tabular-nums">{av}</span>
+            </div>
           </div>
         ))}
       </div>
 
       {/* GP Uplift banner */}
-      <div className="border-t-2 border-ok bg-ok/5 px-6 py-5 flex justify-between items-center">
+      <div className="border-t-2 border-ok bg-ok px-6 py-6 flex justify-between items-center">
         <div>
-          <p className="text-sm font-semibold text-text">GP uplift on same order volume</p>
-          <p className="text-xs text-muted mt-1">
+          <p className="text-base font-bold text-white">GP uplift on same order volume</p>
+          <p className="text-sm text-white/70 mt-1">
             {after.items} items · 2025 order volumes · margin +{deltaMar.toFixed(1)} pp
           </p>
         </div>
         <div className="text-right">
-          <p className="text-3xl font-bold text-ok">+{fmt(deltaGP)}</p>
-          <p className="text-xs text-muted mt-0.5">gross profit uplift</p>
+          <p className="text-4xl font-bold text-white">+{fmt(deltaGP)}</p>
+          <p className="text-sm text-white/70 mt-1">gross profit uplift</p>
         </div>
       </div>
     </div>

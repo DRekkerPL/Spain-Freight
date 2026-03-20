@@ -25,9 +25,9 @@ export default function BucketChart({ data }: BucketChartProps) {
   return (
     <div ref={ref} className="flex flex-col">
       {/* Column headers */}
-      <div className="grid grid-cols-[120px_1fr_64px_64px_60px] gap-3 px-6 py-3 border-b border-border bg-faint">
+      <div className="grid grid-cols-[130px_1fr_72px_72px_64px] gap-3 px-6 py-3 border-b border-border bg-faint">
         {['Bucket', '', 'Before', 'After', '+pp'].map((h, i) => (
-          <span key={i} className={`text-xs font-semibold uppercase tracking-wider text-muted ${i >= 2 ? 'text-right' : ''}`}>
+          <span key={i} className={`text-xs font-bold uppercase tracking-wider text-muted ${i >= 2 ? 'text-right' : ''}`}>
             {h}
           </span>
         ))}
@@ -48,13 +48,13 @@ export default function BucketChart({ data }: BucketChartProps) {
           return (
             <div
               key={i}
-              className="grid grid-cols-[120px_1fr_64px_64px_60px] gap-3 px-6 py-4 items-center hover:bg-faint transition-colors"
+              className="grid grid-cols-[130px_1fr_72px_72px_64px] gap-3 px-6 py-4 items-center hover:bg-faint transition-colors"
             >
-              <span className="text-sm text-muted">{label}</span>
+              <span className="text-sm font-medium text-muted">{label}</span>
 
-              <div className="relative h-2 bg-border rounded-full overflow-hidden">
+              <div className="relative h-2.5 bg-border rounded-full overflow-hidden">
                 <div
-                  className="absolute inset-y-0 left-0 bg-muted/25 rounded-full transition-all duration-700 ease-out"
+                  className="absolute inset-y-0 left-0 bg-brand-sand/70 rounded-full transition-all duration-700 ease-out"
                   style={{ width: animated ? `${beforeW}%` : '0%', transitionDelay: `${i * 40}ms` }}
                 />
                 <div
@@ -64,7 +64,7 @@ export default function BucketChart({ data }: BucketChartProps) {
               </div>
 
               <span className="text-right text-sm text-muted tabular-nums">{row.avgCurrentMargin.toFixed(1)}%</span>
-              <span className="text-right text-sm text-accent tabular-nums">{row.avgNewMargin.toFixed(1)}%</span>
+              <span className="text-right text-sm font-semibold text-accent tabular-nums">{row.avgNewMargin.toFixed(1)}%</span>
               <span className={`text-right text-sm tabular-nums ${diffColor}`}>+{row.marginDiffPp.toFixed(1)}</span>
             </div>
           )
@@ -72,14 +72,14 @@ export default function BucketChart({ data }: BucketChartProps) {
       </div>
 
       {/* Legend */}
-      <div className="flex items-center gap-6 px-6 py-3 border-t border-border bg-faint">
-        <div className="flex items-center gap-2 text-xs text-muted">
-          <div className="w-5 h-2 bg-muted/25 rounded-full" />
-          Before applying system profile
+      <div className="flex items-center gap-6 px-6 py-4 border-t border-border bg-faint">
+        <div className="flex items-center gap-2 text-sm text-muted">
+          <div className="w-5 h-2.5 bg-brand-sand/70 rounded-full" />
+          Before
         </div>
-        <div className="flex items-center gap-2 text-xs text-muted">
-          <div className="w-5 h-2 bg-accent rounded-full" />
-          After applying system profile
+        <div className="flex items-center gap-2 text-sm text-muted">
+          <div className="w-5 h-2.5 bg-accent rounded-full" />
+          After
         </div>
       </div>
     </div>
