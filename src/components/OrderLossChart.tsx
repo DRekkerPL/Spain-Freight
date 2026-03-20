@@ -11,12 +11,12 @@ interface OrderLossChartProps {
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null
   return (
-    <div className="bg-surface border border-border p-3 text-[0.65rem] font-mono">
-      <div className="text-white mb-2">{label}</div>
+    <div className="bg-surface border border-border p-3 text-[0.65rem] font-mono shadow-sm">
+      <div className="text-text mb-2">{label}</div>
       {payload.map((p: any) => (
         <div key={p.name} className="flex justify-between gap-4">
           <span style={{ color: p.fill }}>{p.name}</span>
-          <span className="text-white">{p.value.toLocaleString()}</span>
+          <span className="text-text">{p.value.toLocaleString()}</span>
         </div>
       ))}
     </div>
@@ -51,20 +51,20 @@ export default function OrderLossChart({ data }: OrderLossChartProps) {
       <div className="px-5 pt-4 pb-2" style={{ height: 200 }}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData} barSize={32} barCategoryGap="30%">
-            <CartesianGrid vertical={false} stroke="#2d2d2d" strokeDasharray="3 3" />
+            <CartesianGrid vertical={false} stroke="#E0DDD7" strokeDasharray="3 3" />
             <XAxis
               dataKey="name"
-              tick={{ fontSize: 9, fill: '#7a8a96', fontFamily: 'DM Mono, monospace' }}
-              axisLine={{ stroke: '#2d2d2d' }}
+              tick={{ fontSize: 9, fill: '#6B7A84', fontFamily: 'DM Mono, monospace' }}
+              axisLine={{ stroke: '#E0DDD7' }}
               tickLine={false}
             />
             <YAxis
-              tick={{ fontSize: 9, fill: '#7a8a96', fontFamily: 'DM Mono, monospace' }}
+              tick={{ fontSize: 9, fill: '#6B7A84', fontFamily: 'DM Mono, monospace' }}
               axisLine={false}
               tickLine={false}
               width={32}
             />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: '#1e1e1e' }} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: '#F0EEEA' }} />
             <Bar dataKey="Profitable" stackId="a" fill="#006B44" fillOpacity={0.75} radius={[0, 0, 0, 0]} />
             <Bar dataKey="Loss-making" stackId="a" fill="#ef4444" fillOpacity={0.75} radius={[2, 2, 0, 0]} />
           </BarChart>

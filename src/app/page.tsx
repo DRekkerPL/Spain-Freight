@@ -42,10 +42,9 @@ export default function Home() {
 
       {/* ── Header ── */}
       <header className="relative z-10 px-10 py-8 border-b border-border
-                         flex items-end justify-between
-                         bg-gradient-to-b from-[#0d0d0d] to-transparent">
+                         flex items-end justify-between bg-surface">
         <div>
-          <h1 className="font-syne text-[2rem] font-extrabold tracking-tight text-white leading-none">
+          <h1 className="font-syne text-[2rem] font-extrabold tracking-tight text-text leading-none">
             Bechtle <span className="text-accent">ES</span> — Margin Initiative
           </h1>
           <p className="mt-1.5 text-[0.68rem] tracking-[0.12em] uppercase text-muted">
