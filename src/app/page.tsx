@@ -5,69 +5,81 @@ import BucketChart from '@/components/BucketChart'
 import OrderLossChart from '@/components/OrderLossChart'
 import { kpiSummary, profiles, simulation, buckets, orderLoss } from '@/data/bechtle'
 
-function SectionLabel({ children, sub }: { children: React.ReactNode; sub?: string }) {
+function Section({
+  title, description, children,
+}: {
+  title: string; description?: string; children: React.ReactNode
+}) {
   return (
-    <div className="flex items-center gap-3 mb-3">
-      <span className="font-syne text-[0.65rem] font-bold tracking-[0.2em] uppercase text-accent whitespace-nowrap">
-        {children}
-      </span>
-      {sub && <span className="text-[0.6rem] text-muted">{sub}</span>}
-      <div className="flex-1 h-px bg-border" />
-    </div>
+    <section className="flex flex-col gap-4">
+      <div>
+        <h2 className="text-lg font-bold text-text">{title}</h2>
+        {description && <p className="text-sm text-muted mt-0.5">{description}</p>}
+      </div>
+      {children}
+    </section>
   )
 }
 
-function Panel({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`bg-surface border border-border ${className}`}>
+    <div className={`bg-white rounded-xl border border-border shadow-sm overflow-hidden ${className}`}>
       {children}
     </div>
   )
 }
 
-function PanelHead({ title, sub }: { title: string; sub?: string }) {
+function CardHeader({ title, sub }: { title: string; sub?: string }) {
   return (
-    <div className="px-5 py-3 border-b border-border flex justify-between items-center">
-      <span className="font-syne text-[0.75rem] font-bold tracking-[0.1em] uppercase text-text">
-        {title}
-      </span>
-      {sub && <span className="text-[0.62rem] text-muted">{sub}</span>}
+    <div className="px-6 py-4 border-b border-border flex justify-between items-center bg-faint">
+      <span className="text-sm font-semibold text-text">{title}</span>
+      {sub && <span className="text-xs text-muted">{sub}</span>}
     </div>
   )
 }
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen">
+    <div className="min-h-screen flex flex-col">
 
-      {/* ── Header ── */}
-      <header className="relative z-10 px-10 py-8 border-b border-border
-                         flex items-end justify-between bg-surface">
+      {/* Top accent line */}
+      <div className="h-1 bg-accent flex-shrink-0" />
+
+      {/* Header */}
+      <header className="bg-white border-b border-border px-10 py-6 flex items-center justify-between flex-shrink-0">
         <div>
-          <h1 className="font-syne text-[2rem] font-extrabold tracking-tight text-text leading-none">
-            Bechtle <span className="text-accent">ES</span> — Margin Initiative
-          </h1>
-          <p className="mt-1.5 text-[0.68rem] tracking-[0.12em] uppercase text-muted">
-            Spain · Customer Profile Analysis · 2025 YTD · Logistics €10.04/LU · Small basket &lt;€75
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-text">
+              Bechtle <span className="text-accent">ES</span>
+            </h1>
+            <span className="text-2xl font-light text-border mx-1">|</span>
+            <span className="text-xl font-semibold text-text">Margin Initiative</span>
+          </div>
+          <p className="text-xs text-muted mt-1.5 tracking-wide">
+            Spain · Customer Profile Analysis · 2025 YTD · Logistics €10.04 / LU · Small basket &lt;€75
           </p>
         </div>
-        <div className="text-[0.62rem] tracking-[0.1em] uppercase px-3 py-1.5
-                        border border-border text-muted rounded-sm">
-          EET Spain · Confidential
+        <div className="flex items-center gap-3">
+          <span className="inline-flex items-center gap-1.5 text-xs font-medium text-muted bg-faint border border-border px-3 py-1.5 rounded-lg">
+            <span className="w-1.5 h-1.5 rounded-full bg-ok inline-block" />
+            EET Spain · Confidential
+          </span>
         </div>
       </header>
 
-      {/* ── Main ── */}
-      <main className="relative z-5 px-10 py-8 flex flex-col gap-8">
+      {/* Main */}
+      <main className="flex-1 px-10 py-10 flex flex-col gap-10">
 
-        {/* ── Section 1: KPIs ── */}
-        <div>
-          <SectionLabel>Current state — order loss overview</SectionLabel>
-          <div className="grid grid-cols-4 gap-px bg-border border border-border">
+        {/* ── KPIs ── */}
+        <Section
+          title="Order Loss Overview"
+          description="2025 YTD · Bechtle Direct (9136402341)"
+        >
+          <div className="grid grid-cols-4 gap-5">
             <KpiCard
               label="Total Shipments"
               value={kpiSummary.totalShipments.toLocaleString()}
-              sub="2025 YTD"
+              sub="2025 year to date"
             />
             <KpiCard
               label="Loss-Making Shipments"
@@ -76,7 +88,7 @@ export default function Home() {
               variant="negative"
             />
             <KpiCard
-              label={`Small Basket (<€75)`}
+              label="Small Basket (< €75)"
               value={kpiSummary.smallBasketShipments.toLocaleString()}
               sub={`${kpiSummary.smallBasketPct}% of all shipments`}
               variant="negative"
@@ -88,71 +100,67 @@ export default function Home() {
               variant="accent"
             />
           </div>
-        </div>
+        </Section>
 
-        {/* ── Section 2: Order Loss by Basket Size ── */}
-        <div>
-          <SectionLabel sub="shipments · 2025 YTD">Loss analysis by basket size</SectionLabel>
-          <Panel>
-            <PanelHead
+        {/* ── Order Loss Chart ── */}
+        <Section
+          title="Loss Analysis by Basket Size"
+          description="Breakdown of profitable vs loss-making shipments across basket size segments · 2025 YTD"
+        >
+          <Card>
+            <CardHeader
               title="Order Loss by Basket Size"
-              sub="profitable vs loss-making shipments"
+              sub="shipments · profitable vs loss-making"
             />
             <OrderLossChart data={orderLoss} />
-          </Panel>
-        </div>
+          </Card>
+        </Section>
 
-        {/* ── Section 3: Profiles + Simulation ── */}
+        {/* ── Profiles + Simulation ── */}
         <div className="grid grid-cols-[1fr_1.5fr] gap-6 items-start">
 
-          {/* Profile table */}
-          <div>
-            <SectionLabel sub="excl. partner programmes">
-              Active pricing profiles
-            </SectionLabel>
-            <Panel>
-              <PanelHead
-                title="Profile Analysis"
-                sub="ordered by small basket %"
-              />
+          <Section
+            title="Active Pricing Profiles"
+            description="Excluding partner programmes · click a column to sort"
+          >
+            <Card>
               <ProfileTable data={profiles} />
-            </Panel>
-          </div>
+            </Card>
+          </Section>
 
-          {/* Right column: simulation + buckets */}
           <div className="flex flex-col gap-6">
 
-            {/* Before / After */}
-            <div>
-              <SectionLabel>Fix simulation — apply system price profile</SectionLabel>
-              <Panel>
+            <Section
+              title="Fix Simulation"
+              description="GP impact of applying the system price profile to all active profiles"
+            >
+              <Card>
                 <SimulationCompare data={simulation} />
-              </Panel>
-            </div>
+              </Card>
+            </Section>
 
-            {/* Cost buckets */}
-            <div>
-              <SectionLabel>Margin improvement by cost bucket</SectionLabel>
-              <Panel>
-                <PanelHead
+            <Section
+              title="Margin Improvement by Cost Bucket"
+              description="Average GP margin before and after applying the system price profile"
+            >
+              <Card>
+                <CardHeader
                   title="Before vs After — avg margin %"
                   sub="system price profile applied"
                 />
                 <BucketChart data={buckets} />
-              </Panel>
-            </div>
+              </Card>
+            </Section>
 
           </div>
         </div>
 
       </main>
 
-      {/* ── Footer ── */}
-      <footer className="relative z-5 px-10 py-4 border-t border-border
-                         flex justify-between items-center
-                         text-[0.6rem] tracking-[0.1em] uppercase text-muted">
-        <span>Bechtle Direct · 9136402341 · EET Spain</span>
-        <span>Logistics: €10.04/LU · Small basket: &lt;€75 · Ratio filter: ≤2.5×</span>
+      {/* Footer */}
+      <footer className="bg-white border-t border-border px-10 py-4 flex justify-between items-center flex-shrink-0">
+        <span className="text-xs text-muted">Bechtle Direct · 9136402341 · EET Spain</span>
+        <span className="text-xs text-muted">Logistics: €10.04 / LU · Small basket: &lt;€75 · Ratio filter: ≤2.5×</span>
       </footer>
 
     </div>

@@ -6,8 +6,8 @@ interface SimulationCompareProps {
   data: SimulationRow[]
 }
 
-function fmt(n: number, prefix = '€') {
-  return `${prefix}${n.toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`
+function fmt(n: number) {
+  return `€${n.toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`
 }
 
 export default function SimulationCompare({ data }: SimulationCompareProps) {
@@ -18,61 +18,43 @@ export default function SimulationCompare({ data }: SimulationCompareProps) {
   const deltaGP  = after.deltaGP
   const deltaMar = after.marginPct - before.marginPct
 
-  return (
-    <div className="flex flex-col gap-px">
-      {/* Before / After side by side */}
-      <div className="grid grid-cols-2 gap-px bg-border">
-        {/* Before */}
-        <div className="bg-surface p-6">
-          <div className="text-[0.6rem] tracking-[0.18em] uppercase text-muted mb-4">
-            Before — customer profiles
-          </div>
-          <div className="flex flex-col gap-3">
-            {[
-              ['Revenue',      fmt(before.revenue)],
-              ['Gross Profit', fmt(before.grossProfit)],
-              ['GP Margin',    `${before.marginPct.toFixed(1)}%`],
-            ].map(([label, value]) => (
-              <div key={label} className="flex justify-between items-baseline border-b border-border pb-2">
-                <span className="text-[0.65rem] text-muted">{label}</span>
-                <span className="font-syne text-[1.05rem] font-bold text-text">{value}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+  const rows = [
+    { label: 'Revenue',      before: fmt(before.revenue),               after: fmt(after.revenue)               },
+    { label: 'Gross Profit', before: fmt(before.grossProfit),           after: fmt(after.grossProfit)           },
+    { label: 'GP Margin',    before: `${before.marginPct.toFixed(1)}%`, after: `${after.marginPct.toFixed(1)}%` },
+  ]
 
-        {/* After */}
-        <div className="bg-surface2 p-6">
-          <div className="text-[0.6rem] tracking-[0.18em] uppercase text-ok mb-4">
-            After — system profile
-          </div>
-          <div className="flex flex-col gap-3">
-            {[
-              ['Revenue',      fmt(after.revenue),           'text-ok'],
-              ['Gross Profit', fmt(after.grossProfit),       'text-ok'],
-              ['GP Margin',    `${after.marginPct.toFixed(1)}%`, 'text-ok'],
-            ].map(([label, value, color]) => (
-              <div key={label} className="flex justify-between items-baseline border-b border-border pb-2">
-                <span className="text-[0.65rem] text-muted">{label}</span>
-                <span className={`font-syne text-[1.05rem] font-bold ${color}`}>{value}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+  return (
+    <div>
+      {/* Column headers */}
+      <div className="grid grid-cols-3 border-b border-border bg-faint px-6 py-3">
+        <span className="text-xs font-semibold uppercase tracking-widest text-muted" />
+        <span className="text-xs font-semibold uppercase tracking-widest text-muted text-right">Before</span>
+        <span className="text-xs font-semibold uppercase tracking-widest text-ok text-right">After</span>
       </div>
 
-      {/* Delta bar */}
-      <div className="bg-faint border-l-[3px] border-ok px-5 py-4 flex justify-between items-center">
+      {/* Rows */}
+      <div className="divide-y divide-border">
+        {rows.map(({ label, before: bv, after: av }) => (
+          <div key={label} className="grid grid-cols-3 items-center px-6 py-4 hover:bg-faint transition-colors">
+            <span className="text-sm text-muted font-medium">{label}</span>
+            <span className="text-base font-bold text-text text-right">{bv}</span>
+            <span className="text-base font-bold text-ok text-right">{av}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* GP Uplift banner */}
+      <div className="border-t-2 border-ok bg-ok/5 px-6 py-5 flex justify-between items-center">
         <div>
-          <div className="text-[0.65rem] tracking-[0.12em] uppercase text-muted">
-            GP uplift on same order volume
-          </div>
-          <div className="text-[0.62rem] text-muted mt-1">
-            {after.items} items · 2025 order volumes · margin +{deltaMar.toFixed(1)}pp
-          </div>
+          <p className="text-sm font-semibold text-text">GP uplift on same order volume</p>
+          <p className="text-xs text-muted mt-1">
+            {after.items} items · 2025 order volumes · margin +{deltaMar.toFixed(1)} pp
+          </p>
         </div>
-        <div className="font-syne text-[1.8rem] font-extrabold text-ok">
-          +{fmt(deltaGP)}
+        <div className="text-right">
+          <p className="text-3xl font-bold text-ok">+{fmt(deltaGP)}</p>
+          <p className="text-xs text-muted mt-0.5">gross profit uplift</p>
         </div>
       </div>
     </div>

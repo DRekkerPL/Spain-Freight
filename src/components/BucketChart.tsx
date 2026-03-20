@@ -24,73 +24,62 @@ export default function BucketChart({ data }: BucketChartProps) {
 
   return (
     <div ref={ref} className="flex flex-col">
-      {/* Header */}
-      <div className="grid grid-cols-[90px_1fr_56px_56px_56px] gap-3 px-5 py-2 border-b border-border
-                      text-[0.58rem] tracking-[0.12em] uppercase text-muted">
-        <span>Bucket</span>
-        <span></span>
-        <span className="text-right">Before</span>
-        <span className="text-right">After</span>
-        <span className="text-right">+pp</span>
+      {/* Column headers */}
+      <div className="grid grid-cols-[120px_1fr_64px_64px_60px] gap-3 px-6 py-3 border-b border-border bg-faint">
+        {['Bucket', '', 'Before', 'After', '+pp'].map((h, i) => (
+          <span key={i} className={`text-xs font-semibold uppercase tracking-wider text-muted ${i >= 2 ? 'text-right' : ''}`}>
+            {h}
+          </span>
+        ))}
       </div>
 
       {/* Rows */}
-      <div className="flex flex-col gap-2.5 px-5 py-3">
+      <div className="divide-y divide-border">
         {data.map((row, i) => {
           const beforeW = (row.avgCurrentMargin / MAX_MARGIN) * 100
           const afterW  = (row.avgNewMargin     / MAX_MARGIN) * 100
           const diffColor = row.marginDiffPp > 10
-            ? 'text-ok'
+            ? 'text-ok font-bold'
             : row.marginDiffPp > 4
-            ? 'text-accent2'
+            ? 'text-accent font-semibold'
             : 'text-muted'
-
-          // clean bucket label: strip "1. " prefix
           const label = row.costBucket.replace(/^\d+\.\s*/, '')
 
           return (
             <div
               key={i}
-              className="grid grid-cols-[90px_1fr_56px_56px_56px] gap-3 items-center"
-              style={{ animationDelay: `${i * 50}ms` }}
+              className="grid grid-cols-[120px_1fr_64px_64px_60px] gap-3 px-6 py-4 items-center hover:bg-faint transition-colors"
             >
-              <span className="text-[0.65rem] text-muted whitespace-nowrap">{label}</span>
+              <span className="text-sm text-muted">{label}</span>
 
-              {/* Stacked bar */}
-              <div className="relative h-1.5 bg-faint rounded-sm overflow-hidden">
-                {/* before bar */}
+              <div className="relative h-2 bg-border rounded-full overflow-hidden">
                 <div
-                  className="absolute inset-y-0 left-0 bg-muted/40 rounded-sm transition-all duration-700 ease-out"
+                  className="absolute inset-y-0 left-0 bg-muted/25 rounded-full transition-all duration-700 ease-out"
                   style={{ width: animated ? `${beforeW}%` : '0%', transitionDelay: `${i * 40}ms` }}
                 />
-                {/* after bar */}
                 <div
-                  className="absolute inset-y-0 left-0 bg-accent rounded-sm transition-all duration-700 ease-out"
-                  style={{ width: animated ? `${afterW}%` : '0%', transitionDelay: `${i * 40 + 80}ms` }}
+                  className="absolute inset-y-0 left-0 bg-accent rounded-full transition-all duration-700 ease-out"
+                  style={{ width: animated ? `${afterW}%` : '0%', transitionDelay: `${i * 40 + 100}ms` }}
                 />
               </div>
 
-              <span className="text-right text-[0.65rem] text-muted">
-                {row.avgCurrentMargin.toFixed(1)}%
-              </span>
-              <span className="text-right text-[0.65rem] text-accent2">
-                {row.avgNewMargin.toFixed(1)}%
-              </span>
-              <span className={`text-right text-[0.65rem] font-syne font-bold ${diffColor}`}>
-                +{row.marginDiffPp.toFixed(1)}
-              </span>
+              <span className="text-right text-sm text-muted tabular-nums">{row.avgCurrentMargin.toFixed(1)}%</span>
+              <span className="text-right text-sm text-accent tabular-nums">{row.avgNewMargin.toFixed(1)}%</span>
+              <span className={`text-right text-sm tabular-nums ${diffColor}`}>+{row.marginDiffPp.toFixed(1)}</span>
             </div>
           )
         })}
       </div>
 
       {/* Legend */}
-      <div className="flex items-center gap-4 px-5 py-2 border-t border-border">
-        <div className="flex items-center gap-1.5 text-[0.58rem] text-muted">
-          <div className="w-3 h-1 bg-muted/40 rounded-sm" /> Before
+      <div className="flex items-center gap-6 px-6 py-3 border-t border-border bg-faint">
+        <div className="flex items-center gap-2 text-xs text-muted">
+          <div className="w-5 h-2 bg-muted/25 rounded-full" />
+          Before applying system profile
         </div>
-        <div className="flex items-center gap-1.5 text-[0.58rem] text-muted">
-          <div className="w-3 h-1 bg-accent rounded-sm" /> After
+        <div className="flex items-center gap-2 text-xs text-muted">
+          <div className="w-5 h-2 bg-accent rounded-full" />
+          After applying system profile
         </div>
       </div>
     </div>

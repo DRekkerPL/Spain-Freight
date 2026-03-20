@@ -7,21 +7,20 @@ interface KpiCardProps {
   variant?: 'default' | 'positive' | 'negative' | 'accent'
 }
 
-const variantColors: Record<string, string> = {
-  default:  'text-white',
-  positive: 'text-ok',
-  negative: 'text-danger',
-  accent:   'text-accent',
+const variantMap = {
+  default:  { topBorder: 'border-t-border',  valueColor: 'text-text'   },
+  positive: { topBorder: 'border-t-ok',      valueColor: 'text-ok'     },
+  negative: { topBorder: 'border-t-danger',  valueColor: 'text-danger' },
+  accent:   { topBorder: 'border-t-accent',  valueColor: 'text-accent' },
 }
 
 export default function KpiCard({ label, value, sub, variant = 'default' }: KpiCardProps) {
+  const { topBorder, valueColor } = variantMap[variant]
   return (
-    <div className="bg-surface hover:bg-surface2 transition-colors duration-200 p-6 flex flex-col gap-1.5">
-      <div className="text-[0.62rem] tracking-[0.15em] uppercase text-muted font-mono">{label}</div>
-      <div className={`font-syne text-[2rem] font-extrabold leading-none ${variantColors[variant]}`}>
-        {value}
-      </div>
-      {sub && <div className="text-[0.65rem] text-muted font-mono">{sub}</div>}
+    <div className={`bg-white rounded-xl border border-border border-t-4 ${topBorder} p-6 flex flex-col gap-2 shadow-sm hover:shadow-md transition-all duration-200`}>
+      <p className="text-xs font-semibold tracking-widest uppercase text-muted">{label}</p>
+      <p className={`text-4xl font-bold leading-none tracking-tight ${valueColor}`}>{value}</p>
+      {sub && <p className="text-sm text-muted mt-1">{sub}</p>}
     </div>
   )
 }

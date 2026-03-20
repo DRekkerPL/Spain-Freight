@@ -84,30 +84,30 @@ export default function OrderLossChart({ data }: OrderLossChartProps) {
       </div>
 
       {/* Stats grid */}
-      <div className="grid border-t border-border" style={{ gridTemplateColumns: `repeat(${data.length}, 1fr)` }}>
+      <div className="grid border-t border-border bg-faint" style={{ gridTemplateColumns: `repeat(${data.length}, 1fr)` }}>
         {data.map((row, i) => {
           const lossColor = row.lossMakingPct >= 99
-            ? 'text-danger'
+            ? 'text-danger font-bold'
             : row.lossMakingPct > 50
-            ? 'text-warn'
-            : 'text-ok'
+            ? 'text-warn font-semibold'
+            : 'text-ok font-semibold'
           const profitColor = row.avgNetProfit < 0 ? 'text-danger' : 'text-ok'
           return (
             <div
               key={i}
-              className={`p-3 flex flex-col gap-1.5 bg-surface ${i < data.length - 1 ? 'border-r border-border' : ''}`}
+              className={`px-4 py-4 flex flex-col gap-1 ${i < data.length - 1 ? 'border-r border-border' : ''} hover:bg-white transition-colors`}
             >
-              <div className="text-[0.58rem] text-muted leading-tight">
+              <p className="text-xs text-muted font-medium leading-tight">
                 {row.basketSize.replace(/^\d+\.\s*/, '')}
-              </div>
-              <div className={`font-syne text-[0.95rem] font-bold ${lossColor}`}>
+              </p>
+              <p className={`text-xl ${lossColor}`}>
                 {row.lossMakingPct.toFixed(0)}%
-              </div>
-              <div className="text-[0.55rem] text-muted">loss rate</div>
-              <div className={`font-mono text-[0.65rem] ${profitColor}`}>
+              </p>
+              <p className="text-xs text-muted">loss rate</p>
+              <p className={`text-sm mt-1 tabular-nums ${profitColor}`}>
                 avg {row.avgNetProfit >= 0 ? '+' : ''}€{row.avgNetProfit.toFixed(1)}
-              </div>
-              <div className="text-[0.55rem] text-muted">net/shipment</div>
+              </p>
+              <p className="text-xs text-muted">net / shipment</p>
             </div>
           )
         })}
