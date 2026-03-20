@@ -28,7 +28,7 @@ function Panel({ children, className = '' }: { children: React.ReactNode; classN
 function PanelHead({ title, sub }: { title: string; sub?: string }) {
   return (
     <div className="px-5 py-3 border-b border-border flex justify-between items-center">
-      <span className="font-syne text-[0.75rem] font-bold tracking-[0.1em] uppercase text-[#e2e8f0]">
+      <span className="font-syne text-[0.75rem] font-bold tracking-[0.1em] uppercase text-text">
         {title}
       </span>
       {sub && <span className="text-[0.62rem] text-muted">{sub}</span>}
@@ -43,7 +43,7 @@ export default function Home() {
       {/* ── Header ── */}
       <header className="relative z-10 px-10 py-8 border-b border-border
                          flex items-end justify-between
-                         bg-gradient-to-b from-[#0d1426] to-transparent">
+                         bg-gradient-to-b from-[#0d0d0d] to-transparent">
         <div>
           <h1 className="font-syne text-[2rem] font-extrabold tracking-tight text-white leading-none">
             Bechtle <span className="text-accent">ES</span> — Margin Initiative

@@ -5,18 +5,25 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0a0e1a;
-  --surface: #111827;
-  --surface2: #1a2235;
-  --border: #1f2d45;
-  --faint: #1e293b;
-  --accent: #3b82f6;
-  --accent2: #06b6d4;
+  --bg: #0d0d0d;
+  --surface: #1a1a1a;
+  --surface2: #222222;
+  --border: #2d2d2d;
+  --faint: #1e1e1e;
+  --accent: #2E60A8;
+  --accent2: #79A99A;
   --danger: #ef4444;
   --warn: #f59e0b;
-  --ok: #10b981;
+  --ok: #006B44;
   --text: #e2e8f0;
-  --muted: #64748b;
+  --muted: #7a8a96;
+  /* brand palette */
+  --primary-blue: #2E60A8;
+  --primary-green: #006B44;
+  --primary-black: #1A1A1A;
+  --secondary-blue: #B8CCE0;
+  --secondary-green: #79A99A;
+  --secondary-sand: #B5AA9C;
 }
 
 html, body {
