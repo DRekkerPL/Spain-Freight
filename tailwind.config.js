@@ -1,37 +1,22 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
-      fontFamily: {
-        syne: ['Montserrat', 'sans-serif'],
-        mono: ['Montserrat', 'sans-serif'],
-      },
+      fontFamily: { sans: ['Inter', 'sans-serif'] },
       colors: {
-        bg:       '#F5F4F2',
-        surface:  '#FFFFFF',
-        surface2: '#EEECe8',
-        border:   '#E0DDD7',
-        faint:    '#F0EEEA',
-        accent:   '#2E60A8',
-        accent2:  '#79A99A',
-        danger:   '#ef4444',
-        warn:     '#f59e0b',
-        ok:       '#006B44',
-        muted:    '#6B7A84',
-        text:     '#1A1A1A',
-        // named brand tokens
-        'brand-blue':   '#2E60A8',
-        'brand-green':  '#006B44',
-        'brand-lblue':  '#B8CCE0',
-        'brand-sage':   '#79A99A',
-        'brand-sand':   '#B5AA9C',
-      },
-    },
+        page:    '#F8FAFC',
+        surface: '#FFFFFF',
+        subtle:  '#F1F5F9',
+        border:  '#E2E8F0',
+        primary: '#2563EB',
+        success: '#16A34A',
+        danger:  '#DC2626',
+        warning: '#D97706',
+        ink:     '#0F172A',
+        muted:   '#64748B',
+        'brand-sand': '#B5AA9C',
+      }
+    }
   },
-  plugins: [],
+  plugins: []
 }
